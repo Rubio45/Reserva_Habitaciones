@@ -15,14 +15,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password_hash',
+        'password',
         'is_active',
     ];
 
-    protected $hidden = ['password_hash'];
-
-    // Si tu login usa 'password', puedes crear un accessor/mutator,
-    // pero como tu columna es password_hash nos quedamos así.
+    protected $hidden = ['password'];
 
     // === Roles ===
     // Si tu esquema tiene pivot (común) 'role_user' con user_id, role_id:
@@ -31,13 +28,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user')
             ->withTimestamps();
     }
-
-    // Devuelve el campo correcto para Auth
-public function getAuthPassword()
-{
-    return $this->password_hash;
-}
-
 
     // Si en cambio users tiene role_id directo:
     // public function role() { return $this->belongsTo(Role::class); }
