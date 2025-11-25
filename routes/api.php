@@ -18,11 +18,7 @@ Route::get('/ping', fn () => ['ok' => true]);
 Route::apiResource('room-types', RoomTypeController::class);
 
 // Guests
-Route::get('/guests', [GuestController::class, 'index']);
-Route::post('/guests', [GuestController::class, 'store']);
-Route::get('/guests/{id}', [GuestController::class, 'show']);
-Route::put('/guests/{id}', [GuestController::class, 'update']);
-Route::delete('/guests/{id}', [GuestController::class, 'destroy']);
+Route::apiResource('guests', GuestController::class);
 
 // Amenities
 Route::apiResource('amenities', AmenityController::class);
@@ -31,25 +27,15 @@ Route::apiResource('amenities', AmenityController::class);
 Route::apiResource('rooms', RoomController::class);
 
 // Rate Plans
-Route::get('/rate-plans', [RatePlanController::class, 'index']);
-Route::post('/rate-plans', [RatePlanController::class, 'store']);
-Route::get('/rate-plans/{id}', [RatePlanController::class, 'show']);
-Route::put('/rate-plans/{id}', [RatePlanController::class, 'update']);
-Route::delete('/rate-plans/{id}', [RatePlanController::class, 'destroy']);
+Route::apiResource('rate-plans', RatePlanController::class);
 
 // Rate Plan Prices
-Route::get('/rate-plan-prices', [RatePlanPriceController::class, 'index']);
-Route::post('/rate-plan-prices', [RatePlanPriceController::class, 'store']);
-Route::get('/rate-plan-prices/{id}', [RatePlanPriceController::class, 'show']);
-Route::put('/rate-plan-prices/{id}', [RatePlanPriceController::class, 'update']);
-Route::delete('/rate-plan-prices/{id}', [RatePlanPriceController::class, 'destroy']);
+Route::apiResource('rate-plan-prices', RatePlanPriceController::class);
+// Endpoint extra de lookup por fecha
+Route::get('rate-plan-prices/lookup', [RatePlanPriceController::class, 'getPriceForDate']);
 
 // Reservations
-Route::get('/reservations', [ReservationController::class, 'index']);
-Route::post('/reservations', [ReservationController::class, 'store']);
-Route::get('/reservations/{id}', [ReservationController::class, 'show']);
-Route::put('/reservations/{id}', [ReservationController::class, 'update']);
-Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
+Route::apiResource('reservations', ReservationController::class);
 
 // Reservation Rooms
 Route::get('/reservation-rooms', [ReservationRoomController::class, 'index']);

@@ -10,9 +10,29 @@ class Reservation extends Model
     use HasFactory;
 
     protected $table = 'reservations';
+    
     protected $fillable = [
-        'code','guest_id','status','adults','children',
-        'currency','total_amount','paid_amount','check_in','check_out','channel'
+        'code',
+        'guest_id',
+        'status',
+        'channel',
+        'check_in',
+        'check_out',
+        'adults',
+        'children',
+        'currency',
+        'total_amount',
+        'paid_amount',
+        'notes',
+    ];
+
+    protected $casts = [
+        'check_in' => 'date',
+        'check_out' => 'date',
+        'adults' => 'integer',
+        'children' => 'integer',
+        'total_amount' => 'decimal:2',
+        'paid_amount' => 'decimal:2',
     ];
 
     public function guest()
@@ -20,10 +40,15 @@ class Reservation extends Model
         return $this->belongsTo(Guest::class);
     }
 
+    public function rooms()
+    {
+        return $this->hasMany(ReservationRoom::class);
+    }
+
+    // Alias para compatibilidad con código existente
     public function roomsLines()
     {
-        // líneas por habitación / rango de fechas
-        return $this->hasMany(ReservationRoom::class);
+        return $this->rooms();
     }
 
     public function invoice()
@@ -34,5 +59,21 @@ class Reservation extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Scope para filtrar por rango de fechas (check_in)
+     */
+    public function scopeBetweenDates($query, $from, $to)
+    {
+        return $query->whereBetween('check_in', [$from, $to]);
+    }
+
+    /**
+     * Scope para filtrar por estado
+     */
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
     }
 }

@@ -10,7 +10,7 @@ use OpenApi\Attributes as OA;
     description: 'API REST para el sistema de reservas de hotel. Incluye gestión de amenities, tipos de habitación y habitaciones físicas.',
     contact: new OA\Contact(
         name: 'API Support',
-        email: 'support@hotelreservation.com'
+        email: 'adiazy@uamv.edu.ni'
     )
 )]
 #[OA\Server(
@@ -28,6 +28,22 @@ use OpenApi\Attributes as OA;
 #[OA\Tag(
     name: 'Rooms',
     description: 'Endpoints para gestión de habitaciones físicas'
+)]
+#[OA\Tag(
+    name: 'Rate Plans',
+    description: 'Endpoints para gestión de planes de tarifa'
+)]
+#[OA\Tag(
+    name: 'Rate Plan Prices',
+    description: 'Endpoints para gestión de precios de planes de tarifa'
+)]
+#[OA\Tag(
+    name: 'Guests',
+    description: 'Endpoints para gestión de huéspedes/clientes'
+)]
+#[OA\Tag(
+    name: 'Reservations',
+    description: 'Endpoints para gestión de reservas'
 )]
 abstract class Controller
 {

@@ -9,14 +9,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reservation_rooms', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('reservation_id')->constrained()->onDelete('cascade');
-            $table->foreignId('room_type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('rate_plan_id')->constrained()->onDelete('cascade');
-            $table->decimal('nightly_price', 10, 2);
+            $table->bigIncrements('id');
+            $table->foreignId('reservation_id')->constrained('reservations')->restrictOnDelete();
+            $table->foreignId('room_type_id')->constrained('room_types')->restrictOnDelete();
+            $table->foreignId('room_id')->nullable()->constrained('rooms')->nullOnDelete();
+            $table->foreignId('rate_plan_id')->constrained('rate_plans')->restrictOnDelete();
+            $table->decimal('nightly_price', 12, 2);
             $table->date('date_from');
             $table->date('date_to');
+            $table->timestamps();
+
+            // Nota: MySQL no siempre aplica CHECK constraints, pero la validación se hace a nivel de aplicación
+            // CHECK lógico: date_to > date_from (validado en Form Request con 'after:date_from')
         });
     }
 
