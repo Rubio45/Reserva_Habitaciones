@@ -12,9 +12,7 @@ class Amenity extends Model
     protected $table = 'amenities';
     protected $fillable = ['code', 'name'];
 
-    public function roomTypes()
-    {
-        return $this->belongsToMany(RoomType::class, 'room_type_amenity')
-            ->withTimestamps();
-    }
+    // Nota: En el futuro, este modelo podría tener relaciones con RoomType
+    // a través de una tabla pivot (room_type_amenity) para asociar amenities
+    // con tipos de habitaciones.
 }

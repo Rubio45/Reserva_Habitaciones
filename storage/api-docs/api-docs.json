@@ -1,0 +1,874 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Hotel Reservation System API",
+        "description": "API REST para el sistema de reservas de hotel. Incluye gestión de amenities, tipos de habitación y habitaciones físicas.",
+        "contact": {
+            "name": "API Support",
+            "email": "support@hotelreservation.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/amenities": {
+            "get": {
+                "tags": [
+                    "Amenities"
+                ],
+                "summary": "Obtener lista de amenities",
+                "description": "Lista de amenities",
+                "operationId": "b9b13d6a36e5bb1e593a099b15961753",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de amenities obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "WIFI"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "High-Speed WiFi"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Amenities"
+                ],
+                "summary": "Crear un nuevo amenity",
+                "description": "Crear un nuevo amenity",
+                "operationId": "de05d9ff23ed9673ffa092903b0d6695",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "maxLength": 32,
+                                        "example": "WIFI"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 120,
+                                        "example": "High-Speed WiFi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Amenity creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "WIFI"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "High-Speed WiFi"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Amenity created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/amenities/{id}": {
+            "get": {
+                "tags": [
+                    "Amenities"
+                ],
+                "summary": "Obtener un amenity por ID",
+                "description": "Obtener un amenity específico",
+                "operationId": "623be59fa9f4cd26c9095fd5db1181b0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del amenity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Amenity obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "WIFI"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "High-Speed WiFi"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Amenity no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Amenities"
+                ],
+                "summary": "Actualizar un amenity",
+                "description": "Actualizar un amenity",
+                "operationId": "e321a76dfcac1255db2763ef135ed3d5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del amenity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "maxLength": 32,
+                                        "example": "WIFI"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 120,
+                                        "example": "WiFi Premium"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Amenity actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "WIFI"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "WiFi Premium"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Amenity updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Amenity no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Amenities"
+                ],
+                "summary": "Eliminar un amenity",
+                "description": "Eliminar un amenity",
+                "operationId": "ca7004f90d533835c922713704e585ad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del amenity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Amenity eliminado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Amenity deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Amenity no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/rooms": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Obtener lista de habitaciones",
+                "description": "Lista de habitaciones\n\nFiltros opcionales vía query params:\n- ?status=AVAILABLE\n- ?room_type_id=1",
+                "operationId": "db2a0f9c242ba089e87d5ae1fa8e14c5",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filtrar por estado",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "AVAILABLE",
+                                "OUT_OF_SERVICE",
+                                "CLEANING",
+                                "OCCUPIED"
+                            ],
+                            "example": "AVAILABLE"
+                        }
+                    },
+                    {
+                        "name": "room_type_id",
+                        "in": "query",
+                        "description": "Filtrar por tipo de habitación",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de habitaciones obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Crear una nueva habitación",
+                "description": "Crear una nueva habitación",
+                "operationId": "809158a6b73bac8545f93f5b9f8a8a8a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "room_type_id",
+                                    "room_number"
+                                ],
+                                "properties": {
+                                    "room_type_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "room_number": {
+                                        "type": "string",
+                                        "maxLength": 32,
+                                        "example": "101"
+                                    },
+                                    "floor": {
+                                        "type": "string",
+                                        "maxLength": 16,
+                                        "example": "1",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "AVAILABLE",
+                                            "OUT_OF_SERVICE",
+                                            "CLEANING",
+                                            "OCCUPIED"
+                                        ],
+                                        "example": "AVAILABLE",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Habitación creada exitosamente"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/rooms/{id}": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Obtener una habitación por ID",
+                "description": "Obtener una habitación específica",
+                "operationId": "b1475eb28ef61d930c8d73dce18cd23c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la habitación",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Habitación obtenida exitosamente"
+                    },
+                    "404": {
+                        "description": "Habitación no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Actualizar una habitación",
+                "description": "Actualizar una habitación",
+                "operationId": "0c313fa83b1cc3ffd17495d103f021e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la habitación",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "room_type_id",
+                                    "room_number"
+                                ],
+                                "properties": {
+                                    "room_type_id": {
+                                        "type": "integer"
+                                    },
+                                    "room_number": {
+                                        "type": "string",
+                                        "maxLength": 32
+                                    },
+                                    "floor": {
+                                        "type": "string",
+                                        "maxLength": 16,
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "AVAILABLE",
+                                            "OUT_OF_SERVICE",
+                                            "CLEANING",
+                                            "OCCUPIED"
+                                        ],
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Habitación actualizada exitosamente"
+                    },
+                    "404": {
+                        "description": "Habitación no encontrada"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Eliminar una habitación",
+                "description": "Eliminar una habitación\n\nOpción A: Eliminación física (delete())\nAlternativa: Podrías cambiar status a OUT_OF_SERVICE en lugar de eliminar",
+                "operationId": "4698523ee5dafa1ac652ef8ede5e96d4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la habitación",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Habitación eliminada exitosamente"
+                    },
+                    "404": {
+                        "description": "Habitación no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/room-types": {
+            "get": {
+                "tags": [
+                    "Room Types"
+                ],
+                "summary": "Obtener lista de tipos de habitación",
+                "description": "Lista de tipos de habitación",
+                "operationId": "ca013b8668b9235311faca0f7063a058",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de habitación obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Room Types"
+                ],
+                "summary": "Crear un nuevo tipo de habitación",
+                "description": "Crear un nuevo tipo de habitación",
+                "operationId": "45965ec37cb311105c9806350f4b9e21",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "name",
+                                    "base_occupancy",
+                                    "max_occupancy"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "maxLength": 32,
+                                        "example": "STDQ"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 120,
+                                        "example": "Standard Queen"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Habitación estándar con cama Queen.",
+                                        "nullable": true
+                                    },
+                                    "base_occupancy": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "max_occupancy": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "bed_config": {
+                                        "type": "string",
+                                        "maxLength": 120,
+                                        "example": "1 Queen",
+                                        "nullable": true
+                                    },
+                                    "area_m2": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 20.5,
+                                        "nullable": true
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de habitación creado exitosamente"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/room-types/{id}": {
+            "get": {
+                "tags": [
+                    "Room Types"
+                ],
+                "summary": "Obtener un tipo de habitación por ID",
+                "description": "Obtener un tipo de habitación específico",
+                "operationId": "32dfe7550e8eb4648f15f4037cca60ed",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de habitación",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de habitación obtenido exitosamente"
+                    },
+                    "404": {
+                        "description": "Tipo de habitación no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Room Types"
+                ],
+                "summary": "Actualizar un tipo de habitación",
+                "description": "Actualizar un tipo de habitación",
+                "operationId": "cb1bc264a4c17bd1f46e409a03526d6d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de habitación",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "name",
+                                    "base_occupancy",
+                                    "max_occupancy"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "maxLength": 32
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 120
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "base_occupancy": {
+                                        "type": "integer"
+                                    },
+                                    "max_occupancy": {
+                                        "type": "integer"
+                                    },
+                                    "bed_config": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "area_m2": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "nullable": true
+                                    },
+                                    "is_active": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tipo de habitación actualizado exitosamente"
+                    },
+                    "404": {
+                        "description": "Tipo de habitación no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Room Types"
+                ],
+                "summary": "Eliminar un tipo de habitación",
+                "description": "Eliminar un tipo de habitación",
+                "operationId": "53dbaa498cdf5e36a364a6cb19d725f2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de habitación",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de habitación eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Tipo de habitación no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Amenities",
+            "description": "Endpoints para gestión de amenities (comodidades)"
+        },
+        {
+            "name": "Room Types",
+            "description": "Endpoints para gestión de tipos de habitación"
+        },
+        {
+            "name": "Rooms",
+            "description": "Endpoints para gestión de habitaciones físicas"
+        }
+    ]
+}

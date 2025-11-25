@@ -15,8 +15,7 @@ use App\Http\Controllers\Api\UserController;
 Route::get('/ping', fn () => ['ok' => true]);
 
 // Room Types
-Route::get('/room-types', [RoomTypeController::class, 'index']);
-Route::get('/room-types/{id}', [RoomTypeController::class, 'show']);
+Route::apiResource('room-types', RoomTypeController::class);
 
 // Guests
 Route::get('/guests', [GuestController::class, 'index']);
@@ -26,18 +25,10 @@ Route::put('/guests/{id}', [GuestController::class, 'update']);
 Route::delete('/guests/{id}', [GuestController::class, 'destroy']);
 
 // Amenities
-Route::get('/amenities', [AmenityController::class, 'index']);
-Route::post('/amenities', [AmenityController::class, 'store']);
-Route::get('/amenities/{id}', [AmenityController::class, 'show']);
-Route::put('/amenities/{id}', [AmenityController::class, 'update']);
-Route::delete('/amenities/{id}', [AmenityController::class, 'destroy']);
+Route::apiResource('amenities', AmenityController::class);
 
 // Rooms
-Route::get('/rooms', [RoomController::class, 'index']);
-Route::post('/rooms', [RoomController::class, 'store']);
-Route::get('/rooms/{id}', [RoomController::class, 'show']);
-Route::put('/rooms/{id}', [RoomController::class, 'update']);
-Route::delete('/rooms/{id}', [RoomController::class, 'destroy']);
+Route::apiResource('rooms', RoomController::class);
 
 // Rate Plans
 Route::get('/rate-plans', [RatePlanController::class, 'index']);

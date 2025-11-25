@@ -9,20 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up(): void
-{
-    Schema::create('rooms', function (Blueprint $table) {
-        $table->bigIncrements('id');
-        $table->unsignedBigInteger('room_type_id');
-        $table->string('room_number', 32);
-        $table->string('floor', 16)->nullable();
-        $table->string('status', 16)->default('available'); // según tu enum
-        $table->timestamps();
-
-        $table->foreign('room_type_id')->references('id')->on('room_types')->restrictOnDelete();
-        $table->unique(['room_number']); // opcional pero útil
-    });
-}
+    public function up(): void
+    {
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('room_type_id')->constrained('room_types')->restrictOnDelete();
+            $table->string('room_number', 32)->unique();
+            $table->string('floor', 16)->nullable();
+            // Usamos string en lugar de ENUM nativo para mayor flexibilidad
+            // Los valores válidos se validan a nivel de aplicación (Form Request)
+            // Valores posibles: AVAILABLE, OUT_OF_SERVICE, CLEANING, OCCUPIED
+            $table->string('status', 20)->default('AVAILABLE');
+            $table->timestamps();
+        });
+    }
 
 
     /**

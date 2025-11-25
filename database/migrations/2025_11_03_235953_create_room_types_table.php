@@ -14,9 +14,10 @@ public function up(): void
     Schema::create('room_types', function (Blueprint $table) {
         $table->bigIncrements('id');
         $table->string('code', 32)->unique();
+        $table->string('name', 120);
         $table->text('description')->nullable();
-        $table->tinyInteger('base_occupancy')->unsigned()->default(1);
-        $table->tinyInteger('max_occupancy')->unsigned()->default(1);
+        $table->tinyInteger('base_occupancy')->unsigned()->default(2);
+        $table->tinyInteger('max_occupancy')->unsigned()->default(4);
         $table->string('bed_config', 120)->nullable();
         $table->decimal('area_m2', 6, 2)->nullable();
         $table->boolean('is_active')->default(true);

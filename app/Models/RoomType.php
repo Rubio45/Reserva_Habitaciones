@@ -10,9 +10,23 @@ class RoomType extends Model
     use HasFactory;
 
     protected $table = 'room_types';
+    
     protected $fillable = [
-        'code','description','base_occupancy','max_occupancy',
-        'bed_config','area_m2','is_active'
+        'code',
+        'name',
+        'description',
+        'base_occupancy',
+        'max_occupancy',
+        'bed_config',
+        'area_m2',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'base_occupancy' => 'integer',
+        'max_occupancy' => 'integer',
+        'area_m2' => 'decimal:2',
+        'is_active' => 'boolean',
     ];
 
     public function rooms()
